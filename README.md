@@ -18,5 +18,5 @@ pip install -e .
 import gym
 import gym_rubik_cube
 
-env = gym.make('Rubik-Cube-v0')
+env = gym.make('RubikCube-v0')
 ```

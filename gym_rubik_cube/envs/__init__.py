@@ -1,0 +1,1 @@
+from gym_rubik_cube.envs.rubik_cube_env import RubikCubeEnv

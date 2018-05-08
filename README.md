@@ -19,4 +19,8 @@ import gym
 import gym_rubik_cube
 
 env = gym.make('RubikCube-v0')
+env.reset()
+for _ in range(3):
+    env.render()
+    observation, reward, done, info = env.step(env.action_space.sample()) 
 ```

@@ -28,8 +28,10 @@ class RubikCubeEnv(gym.Env):
     episode_over = self.mycube == pycuber.Cube()
     return self.get_state(), reward, episode_over, {}
     
-  def reset(self):
+  def reset(self, step = 100):
     self.mycube = pycuber.Cube()
+    for i in range(step):
+        self.step(self.action_space.sample())
     
   def get_state(self):
     return self._cubeAsArray(self.mycube)

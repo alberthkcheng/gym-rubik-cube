@@ -32,6 +32,7 @@ class RubikCubeEnv(gym.Env):
     self.mycube = pycuber.Cube()
     for i in range(step):
         self.step(self.action_space.sample())
+    return self.get_state()
     
   def get_state(self):
     return self._cubeAsArray(self.mycube)

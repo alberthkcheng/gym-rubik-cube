@@ -2,6 +2,7 @@ import gym
 from gym import error, spaces, utils
 from gym.utils import seeding
 
+import numpy as np
 import pycuber
 from sklearn.preprocessing import LabelBinarizer
 
@@ -12,7 +13,6 @@ class RubikCubeEnv(gym.Env):
 
   def __init__(self):
     self.mycube = pycuber.Cube()
-  
     self.action_space = spaces.Discrete(6)
     
     # No. of face x No. of possible color
@@ -36,23 +36,23 @@ class RubikCubeEnv(gym.Env):
     
   def get_state(self):
     return self._cubeAsArray(self.mycube)
-
+  
+  def _get_prop_correct_face(self):
+    return np.mean(self._cubeAsArray(pycuber.Cube()) == self.get_state())
+  
   def _take_action(self, action):
     self.mycube(ACTION_LOOKUP[action])
 
   def _get_reward(self):
-    if self.mycube == pycuber.Cube():
-        return 1
-    else:
-        return 0
+    return self._get_prop_correct_face()
 
-  def render(self):
+  def render(self, mode = None):
     print(self.mycube)
     
   def _cubeAsArray(self, cube):
     cubeArray = []
     for face in ACTION_LOOKUP:
-        f = self.mycube.get_face(ACTION_LOOKUP[face])
+        f = cube.get_face(ACTION_LOOKUP[face])
         for x in [0,1,2]:
             for y in [0,1,2]:
                 cubeArray.append(str(f[x][y]))
